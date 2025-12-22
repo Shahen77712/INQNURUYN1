@@ -1,0 +1,1340 @@
+<!DOCTYPE html>
+<html lang="hy">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Շքեղ Կատալոգ | Զամբյուղով</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+        }
+
+        :root {
+            --primary: #2c3e50;
+            --secondary: #e74c3c;
+            --accent: #f39c12;
+            --light: #ecf0f1;
+            --dark: #1a252f;
+            --success: #27ae60;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: var(--dark);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            padding: 30px 0;
+            margin-bottom: 40px;
+        }
+
+        .logo {
+            font-size: 3.5rem;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        h1 {
+            font-size: 2.8rem;
+            color: var(--dark);
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: #7f8c8d;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .auth-container {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-bottom: 50px;
+            flex-wrap: wrap;
+        }
+
+        .auth-box {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            width: 100%;
+            max-width: 450px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .auth-box:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        }
+
+        .auth-tabs {
+            display: flex;
+            margin-bottom: 30px;
+            border-bottom: 2px solid var(--light);
+        }
+
+        .auth-tab {
+            flex: 1;
+            text-align: center;
+            padding: 15px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #95a5a6;
+            transition: var(--transition);
+        }
+
+        .auth-tab.active {
+            color: var(--primary);
+            border-bottom: 3px solid var(--secondary);
+        }
+
+        .auth-form {
+            display: none;
+        }
+
+        .auth-form.active {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #dfe6e9;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(243, 156, 18, 0.2);
+        }
+
+        .btn {
+            background: var(--secondary);
+            color: white;
+            border: none;
+            padding: 16px 30px;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn:hover {
+            background: #c0392b;
+            transform: translateY(-2px);
+        }
+
+        .catalog-container {
+            display: none;
+            margin-top: 30px;
+        }
+
+        .user-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: white;
+            padding: 20px 30px;
+            border-radius: 15px;
+            margin-bottom: 40px;
+            box-shadow: var(--shadow);
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .user-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, var(--secondary), var(--accent));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .cart-icon-container {
+            position: relative;
+            margin-right: 20px;
+        }
+
+        .cart-icon {
+            font-size: 1.8rem;
+            color: var(--primary);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .cart-icon:hover {
+            color: var(--secondary);
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: var(--secondary);
+            color: white;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        .logout-btn {
+            background: var(--light);
+            color: var(--dark);
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .logout-btn:hover {
+            background: #bdc3c7;
+        }
+
+        .main-content {
+            display: flex;
+            gap: 30px;
+        }
+
+        .products-section {
+            flex: 3;
+        }
+
+        .cart-section {
+            flex: 2;
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: var(--shadow);
+            height: fit-content;
+            position: sticky;
+            top: 20px;
+        }
+
+        .cart-section h2 {
+            margin-bottom: 25px;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .cart-empty {
+            text-align: center;
+            padding: 40px 20px;
+            color: #95a5a6;
+        }
+
+        .cart-empty i {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            color: #dfe6e9;
+        }
+
+        .cart-items {
+            margin-bottom: 30px;
+        }
+
+        .cart-item {
+            display: flex;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid #ecf0f1;
+        }
+
+        .cart-item:last-child {
+            border-bottom: none;
+        }
+
+        .cart-item-img {
+            width: 70px;
+            height: 70px;
+            border-radius: 10px;
+            background-size: cover;
+            background-position: center;
+            margin-right: 15px;
+        }
+
+        .cart-item-details {
+            flex: 1;
+        }
+
+        .cart-item-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .cart-item-price {
+            color: var(--secondary);
+            font-weight: bold;
+        }
+
+        .cart-item-remove {
+            background: none;
+            border: none;
+            color: #e74c3c;
+            cursor: pointer;
+            font-size: 1.2rem;
+            padding: 5px;
+            transition: var(--transition);
+        }
+
+        .cart-item-remove:hover {
+            color: #c0392b;
+        }
+
+        .cart-total {
+            display: flex;
+            justify-content: space-between;
+            font-size: 1.5rem;
+            font-weight: bold;
+            padding: 20px 0;
+            border-top: 2px solid var(--light);
+            margin-top: 20px;
+        }
+
+        .cart-actions {
+            display: flex;
+            gap: 15px;
+        }
+
+        .cart-btn {
+            flex: 1;
+            padding: 15px;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            text-align: center;
+        }
+
+        .clear-cart {
+            background: var(--light);
+            color: var(--dark);
+            border: none;
+        }
+
+        .clear-cart:hover {
+            background: #bdc3c7;
+        }
+
+        .checkout-btn {
+            background: var(--success);
+            color: white;
+            border: none;
+        }
+
+        .checkout-btn:hover {
+            background: #219653;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .product-img {
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .product-content {
+            padding: 25px;
+        }
+
+        .product-title {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+
+        .product-description {
+            color: #7f8c8d;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .product-price {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--secondary);
+            margin-bottom: 20px;
+        }
+
+        .product-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .add-to-cart-btn, .buy-now-btn {
+            flex: 1;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+        }
+
+        .add-to-cart-btn {
+            background: var(--primary);
+            color: white;
+        }
+
+        .add-to-cart-btn:hover {
+            background: #1a252f;
+        }
+
+        .buy-now-btn {
+            background: var(--accent);
+            color: white;
+        }
+
+        .buy-now-btn:hover {
+            background: #e67e22;
+        }
+
+        .restricted-message {
+            text-align: center;
+            padding: 60px 20px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            margin-top: 40px;
+        }
+
+        .restricted-icon {
+            font-size: 5rem;
+            color: #e74c3c;
+            margin-bottom: 20px;
+        }
+
+        .message {
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+            display: none;
+        }
+
+        .success {
+            background: rgba(39, 174, 96, 0.1);
+            color: var(--success);
+            border: 1px solid rgba(39, 174, 96, 0.3);
+        }
+
+        .error {
+            background: rgba(231, 76, 60, 0.1);
+            color: var(--secondary);
+            border: 1px solid rgba(231, 76, 60, 0.3);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+            animation: modalAppear 0.3s ease;
+        }
+
+        @keyframes modalAppear {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: #7f8c8d;
+            cursor: pointer;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: #7f8c8d;
+            margin-top: 50px;
+            border-top: 1px solid #dfe6e9;
+        }
+
+        @media (max-width: 992px) {
+            .main-content {
+                flex-direction: column;
+            }
+            
+            .cart-section {
+                position: static;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .auth-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .auth-box {
+                width: 90%;
+            }
+            
+            .user-bar {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .product-actions {
+                flex-direction: column;
+            }
+            
+            .cart-actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <i class="fas fa-gem"></i>
+            </div>
+            <h1>Շքեղ Կատալոգ</h1>
+            <p class="subtitle">Բացառիկ ապրանքներ միայն գրանցված օգտատերերի համար։ Ավելացրեք ապրանքները զամբյուղ և պատվիրեք մեկ կտտոցով։</p>
+        </header>
+
+        <div id="authSection" class="auth-container">
+            <div class="auth-box">
+                <div class="auth-tabs">
+                    <div class="auth-tab active" onclick="switchTab('login')">Մուտք</div>
+                    <div class="auth-tab" onclick="switchTab('register')">Գրանցում</div>
+                </div>
+
+                <div id="loginForm" class="auth-form active">
+                    <h2 style="margin-bottom: 25px; color: var(--primary);">Մուտք գործել</h2>
+                    <div class="message" id="loginMessage"></div>
+                    <div class="form-group">
+                        <label for="loginEmail"><i class="fas fa-envelope"></i> Էլ. փոստ</label>
+                        <input type="email" id="loginEmail" placeholder="Ձեր էլ. փոստը">
+                    </div>
+                    <div class="form-group">
+                        <label for="loginPassword"><i class="fas fa-lock"></i> Գաղտնաբառ</label>
+                        <input type="password" id="loginPassword" placeholder="Ձեր գաղտնաբառը">
+                    </div>
+                    <button class="btn" onclick="login()">
+                        <i class="fas fa-sign-in-alt"></i> Մուտք գործել
+                    </button>
+                </div>
+
+                <div id="registerForm" class="auth-form">
+                    <h2 style="margin-bottom: 25px; color: var(--primary);">Նոր հաշիվ</h2>
+                    <div class="message" id="registerMessage"></div>
+                    <div class="form-group">
+                        <label for="registerName"><i class="fas fa-user"></i> Անուն</label>
+                        <input type="text" id="registerName" placeholder="Ձեր անունը">
+                    </div>
+                    <div class="form-group">
+                        <label for="registerEmail"><i class="fas fa-envelope"></i> Էլ. փոստ</label>
+                        <input type="email" id="registerEmail" placeholder="Ձեր էլ. փոստը">
+                    </div>
+                    <div class="form-group">
+                        <label for="registerPassword"><i class="fas fa-lock"></i> Գաղտնաբառ</label>
+                        <input type="password" id="registerPassword" placeholder="Նվազագույնը 6 նիշ">
+                    </div>
+                    <div class="form-group">
+                        <label for="confirmPassword"><i class="fas fa-lock"></i> Հաստատել գաղտնաբառը</label>
+                        <input type="password" id="confirmPassword" placeholder="Կրկին գաղտնաբառը">
+                    </div>
+                    <button class="btn" onclick="register()">
+                        <i class="fas fa-user-plus"></i> Գրանցվել
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="catalogSection" class="catalog-container">
+            <div class="user-bar">
+                <div class="user-info">
+                    <div class="user-avatar" id="userAvatar">U</div>
+                    <div>
+                        <h3 id="userName">Օգտատեր</h3>
+                        <p id="userEmail" style="color: #7f8c8d;">user@example.com</p>
+                    </div>
+                </div>
+                
+                <div style="display: flex; align-items: center; gap: 15px;">
+                    <div class="cart-icon-container">
+                        <i class="fas fa-shopping-cart cart-icon" onclick="toggleCart()"></i>
+                        <div class="cart-count" id="cartCount">0</div>
+                    </div>
+                    <button class="logout-btn" onclick="logout()">
+                        <i class="fas fa-sign-out-alt"></i> Դուրս գալ
+                    </button>
+                </div>
+            </div>
+
+            <div class="main-content">
+                <div class="products-section">
+                    <h2 style="margin-bottom: 30px; color: var(--primary);">Բացառիկ Ապրանքներ</h2>
+                    
+                    <div class="products-grid" id="productsGrid">
+                        <!-- Products will be loaded here -->
+                    </div>
+                </div>
+
+                <div class="cart-section" id="cartSection">
+                    <h2><i class="fas fa-shopping-cart"></i> Զամբյուղ</h2>
+                    
+                    <div id="cartEmpty" class="cart-empty">
+                        <i class="fas fa-shopping-basket"></i>
+                        <h3>Զամբյուղը դատարկ է</h3>
+                        <p>Ավելացրեք ապրանքներ զամբյուղ՝ սեղմելով «Ավելացնել զամբյուղ» կոճակը</p>
+                    </div>
+                    
+                    <div id="cartItems" class="cart-items" style="display: none;">
+                        <!-- Cart items will be loaded here -->
+                    </div>
+                    
+                    <div id="cartTotal" class="cart-total" style="display: none;">
+                        <span>Ընդամենը</span>
+                        <span id="totalAmount">0 ֏</span>
+                    </div>
+                    
+                    <div id="cartActions" class="cart-actions" style="display: none;">
+                        <button class="cart-btn clear-cart" onclick="clearCart()">
+                            <i class="fas fa-trash"></i> Մաքրել զամբյուղը
+                        </button>
+                        <button class="cart-btn checkout-btn" onclick="checkout()">
+                            <i class="fas fa-credit-card"></i> Պատվիրել
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="restrictedSection" class="restricted-message" style="display: none;">
+            <div class="restricted-icon">
+                <i class="fas fa-lock"></i>
+            </div>
+            <h2 style="margin-bottom: 20px; color: var(--primary);">Մուտքը սահմանափակված է</h2>
+            <p style="max-width: 600px; margin: 0 auto 30px; line-height: 1.6;">
+                Կատալոգը հասանելի է միայն գրանցված օգտատերերին։ Խնդրում ենք գրանցվել կամ մուտք գործել ձեր հաշիվ։
+            </p>
+            <button class="btn" onclick="showAuth()" style="width: auto; padding: 15px 40px;">
+                <i class="fas fa-sign-in-alt"></i> Մուտք գործել
+            </button>
+        </div>
+
+        <!-- Պատվերի հաստատման մոդալ -->
+        <div id="orderModal" class="modal">
+            <div class="modal-content">
+                <button class="modal-close" onclick="closeModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+                <h2 style="margin-bottom: 20px; color: var(--primary);">Պատվերի հաստատում</h2>
+                <div id="orderDetails">
+                    <!-- Order details will be loaded here -->
+                </div>
+                <div class="form-group" style="margin-top: 20px;">
+                    <label for="orderAddress"><i class="fas fa-map-marker-alt"></i> Առաքման հասցե</label>
+                    <input type="text" id="orderAddress" placeholder="Մուտքագրեք ձեր հասցեն">
+                </div>
+                <div class="form-group">
+                    <label for="orderPhone"><i class="fas fa-phone"></i> Հեռախոսահամար</label>
+                    <input type="tel" id="orderPhone" placeholder="Ձեր հեռախոսահամարը">
+                </div>
+                <button class="btn" onclick="confirmOrder()" style="margin-top: 20px;">
+                    <i class="fas fa-check-circle"></i> Հաստատել պատվերը
+                </button>
+            </div>
+        </div>
+
+        <footer>
+            <p>© 2023 Շքեղ Կատալոգ. Բոլոր իրավունքները պաշտպանված են.</p>
+            <p style="margin-top: 10px;">Այս կայքը օգտագործում է բարելավված անվտանգության մեթոդներ օգտատերերի տվյալները պաշտպանելու համար։</p>
+        </footer>
+    </div>
+
+    <script>
+        // Սիմուլյացված օգտատերերի տվյալների բազա
+        let users = JSON.parse(localStorage.getItem('luxuryCatalogUsers')) || [];
+        let currentUser = JSON.parse(localStorage.getItem('luxuryCatalogCurrentUser')) || null;
+        
+        // Զամբյուղի տվյալներ (կապված յուրաքանչյուր օգտատիրոջ հետ)
+        let cart = JSON.parse(localStorage.getItem(`luxuryCatalogCart_${currentUser ? currentUser.id : ''}`)) || [];
+        
+        // Ապրանքների տվյալներ
+        const products = [
+            {
+                id: 1,
+                name: "Շքեղ Ոսկյա Ժամացույց",
+                description: "Ձեռագործ ոսկյա ժամացույց շվեյցարական մեխանիզմով, սահմանափակ շարք։",
+                price: 1250000,
+                image: "https://images.unsplash.com/photo-1523170335258-f5ed11844a49?ixlib=rb-4.0.3&auto=format&fit=crop&w=1180&q=80",
+                category: "Ոսկերչական"
+            },
+            {
+                id: 2,
+                name: "Ադամանդե Մատանի",
+                description: "Մաքուր ադամանդով զարդարված պլատինե մատանի անհատական դիզայնով։",
+                price: 3500000,
+                image: "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1180&q=80",
+                category: "Ոսկերչական"
+            },
+            {
+                id: 3,
+                name: "Համակարգիչ Լյուքս դասի",
+                description: "Գերհզոր գեյմինգ համակարգիչ հեղինակավոր դիզայնով և առավելագույն կատարողականությամբ։",
+                price: 2800000,
+                image: "https://images.unsplash.com/photo-1593640408182-31c70c8268f5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1180&q=80",
+                category: "Էլեկտրոնիկա"
+            },
+            {
+                id: 4,
+                name: "Դիզայներական Սաթիպ",
+                description: "Ձեռագործ կաշվից պատրաստված սաթիպ հեղինակավոր դիզայների կողմից։",
+                price: 450000,
+                image: "https://images.unsplash.com/photo-1584917865442-de89df76afd3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1180&q=80",
+                category: "Աքսեսուարներ"
+            },
+            {
+                id: 5,
+                name: "Գինու հավաքածու",
+                description: "Համտեսված գինիների հավաքածու 1985 թվականի հնացած գինիով։",
+                price: 1750000,
+                image: "https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1180&q=80",
+                category: "Գինի"
+            },
+            {
+                id: 6,
+                name: "Շքեղ Ավտոմեքենա",
+                description: "Լյուքս դասի սպորտային ավտոմեքենա անհատական կոնֆիգուրացիայով։",
+                price: 75000000,
+                image: "https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1180&q=80",
+                category: "Ավտոմեքենաներ"
+            },
+            {
+                id: 7,
+                name: "Շքեղ Գորգ",
+                description: "Ձեռագործ մետաքսե գորգ հատուկ դիզայնով, պատրաստված արհեստավորների կողմից։",
+                price: 850000,
+                image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1180&q=80",
+                category: "Կահույք"
+            },
+            {
+                id: 8,
+                name: "Նկար Հեղինակավոր Նկարիչից",
+                description: "Բնօրինակ կտավ ժամանակակից նկարչի կողմից, սահմանափակ տպաքանակով։",
+                price: 3200000,
+                image: "https://images.unsplash.com/photo-1578301978693-85fa9c0320b9?ixlib=rb-4.0.3&auto=format&fit=crop&w=1180&q=80",
+                category: "Արվեստ"
+            }
+        ];
+
+        // Սկզբնական վիճակի ստուգում
+        document.addEventListener('DOMContentLoaded', function() {
+            if (currentUser) {
+                loadCartFromStorage();
+                showCatalog();
+            } else {
+                showAuth();
+            }
+        });
+
+        // Տաբերի փոփոխում
+        function switchTab(tabName) {
+            document.querySelectorAll('.auth-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            document.querySelectorAll('.auth-form').forEach(form => {
+                form.classList.remove('active');
+            });
+            
+            if (tabName === 'login') {
+                document.querySelector('.auth-tab:nth-child(1)').classList.add('active');
+                document.getElementById('loginForm').classList.add('active');
+            } else {
+                document.querySelector('.auth-tab:nth-child(2)').classList.add('active');
+                document.getElementById('registerForm').classList.add('active');
+            }
+            
+            // Մաքրել հաղորդագրությունները
+            document.getElementById('loginMessage').style.display = 'none';
+            document.getElementById('registerMessage').style.display = 'none';
+        }
+
+        // Գրանցման ֆունկցիա
+        function register() {
+            const name = document.getElementById('registerName').value.trim();
+            const email = document.getElementById('registerEmail').value.trim();
+            const password = document.getElementById('registerPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            
+            const messageEl = document.getElementById('registerMessage');
+            messageEl.style.display = 'none';
+            
+            // Վալիդացիա
+            if (!name || !email || !password || !confirmPassword) {
+                showMessage('registerMessage', 'Խնդրում ենք լրացնել բոլոր դաշտերը', 'error');
+                return;
+            }
+            
+            if (password.length < 6) {
+                showMessage('registerMessage', 'Գաղտնաբառը պետք է պարունակի առնվազն 6 նիշ', 'error');
+                return;
+            }
+            
+            if (password !== confirmPassword) {
+                showMessage('registerMessage', 'Գաղտնաբառերը չեն համընկնում', 'error');
+                return;
+            }
+            
+            if (!validateEmail(email)) {
+                showMessage('registerMessage', 'Խնդրում ենք մուտքագրել վավեր էլ. փոստ', 'error');
+                return;
+            }
+            
+            // Ստուգել, արդյոք օգտատերը գոյություն ունի
+            if (users.find(user => user.email === email)) {
+                showMessage('registerMessage', 'Այս էլ. փոստով օգտատեր արդեն գրանցված է', 'error');
+                return;
+            }
+            
+            // Ավելացնել նոր օգտատեր
+            const newUser = {
+                id: Date.now(),
+                name,
+                email,
+                password: hashPassword(password),
+                registrationDate: new Date().toISOString()
+            };
+            
+            users.push(newUser);
+            localStorage.setItem('luxuryCatalogUsers', JSON.stringify(users));
+            
+            // Ավտոմատ մուտք գործել գրանցումից հետո
+            currentUser = newUser;
+            localStorage.setItem('luxuryCatalogCurrentUser', JSON.stringify(newUser));
+            
+            // Ստեղծել դատարկ զամբյուղ նոր օգտատիրոջ համար
+            cart = [];
+            saveCartToStorage();
+            
+            showMessage('registerMessage', 'Գրանցումը հաջող էր։ Դուք մուտք գործեցիք համակարգ։', 'success');
+            
+            // Ցույց տալ կատալոգը 2 վայրկյան հետո
+            setTimeout(() => {
+                showCatalog();
+            }, 2000);
+        }
+
+        // Մուտքի ֆունկցիա
+        function login() {
+            const email = document.getElementById('loginEmail').value.trim();
+            const password = document.getElementById('loginPassword').value;
+            
+            const messageEl = document.getElementById('loginMessage');
+            messageEl.style.display = 'none';
+            
+            // Վալիդացիա
+            if (!email || !password) {
+                showMessage('loginMessage', 'Խնդրում ենք լրացնել բոլոր դաշտերը', 'error');
+                return;
+            }
+            
+            // Գտնել օգտատերին
+            const user = users.find(user => user.email === email && user.password === hashPassword(password));
+            
+            if (!user) {
+                showMessage('loginMessage', 'Սխալ էլ. փոստ կամ գաղտնաբառ', 'error');
+                return;
+            }
+            
+            // Մուտք գործել
+            currentUser = user;
+            localStorage.setItem('luxuryCatalogCurrentUser', JSON.stringify(user));
+            
+            // Բեռնել օգտատիրոջ զամբյուղը
+            loadCartFromStorage();
+            
+            showMessage('loginMessage', 'Մուտքը հաջող էր։ Ողջույն ' + user.name + '!', 'success');
+            
+            // Ցույց տալ կատալոգը 1 վայրկյան հետո
+            setTimeout(() => {
+                showCatalog();
+            }, 1000);
+        }
+
+        // Ելքի ֆունկցիա
+        function logout() {
+            currentUser = null;
+            localStorage.removeItem('luxuryCatalogCurrentUser');
+            cart = [];
+            showAuth();
+        }
+
+        // Ցույց տալ գրանցման/մուտքի բաժին
+        function showAuth() {
+            document.getElementById('authSection').style.display = 'flex';
+            document.getElementById('catalogSection').style.display = 'none';
+            document.getElementById('restrictedSection').style.display = 'none';
+            
+            // Մաքրել դաշտերը
+            document.getElementById('loginEmail').value = '';
+            document.getElementById('loginPassword').value = '';
+            document.getElementById('registerName').value = '';
+            document.getElementById('registerEmail').value = '';
+            document.getElementById('registerPassword').value = '';
+            document.getElementById('confirmPassword').value = '';
+            
+            // Մաքրել հաղորդագրությունները
+            document.getElementById('loginMessage').style.display = 'none';
+            document.getElementById('registerMessage').style.display = 'none';
+        }
+
+        // Ցույց տալ կատալոգը
+        function showCatalog() {
+            if (!currentUser) {
+                document.getElementById('restrictedSection').style.display = 'block';
+                document.getElementById('authSection').style.display = 'none';
+                document.getElementById('catalogSection').style.display = 'none';
+                return;
+            }
+            
+            document.getElementById('authSection').style.display = 'none';
+            document.getElementById('catalogSection').style.display = 'block';
+            document.getElementById('restrictedSection').style.display = 'none';
+            
+            // Լրացնել օգտատիրոջ տվյալները
+            document.getElementById('userName').textContent = currentUser.name;
+            document.getElementById('userEmail').textContent = currentUser.email;
+            document.getElementById('userAvatar').textContent = currentUser.name.charAt(0).toUpperCase();
+            
+            // Լրացնել ապրանքները
+            loadProducts();
+            
+            // Լրացնել զամբյուղը
+            updateCartDisplay();
+        }
+
+        // Բեռնել ապրանքները
+        function loadProducts() {
+            const productsGrid = document.getElementById('productsGrid');
+            productsGrid.innerHTML = '';
+            
+            products.forEach(product => {
+                const productCard = document.createElement('div');
+                productCard.className = 'product-card';
+                
+                // Ստուգել, արդյոք ապրանքն արդեն զամբյուղում է
+                const inCart = cart.some(item => item.id === product.id);
+                
+                productCard.innerHTML = `
+                    <div class="product-img" style="background-image: url('${product.image}')"></div>
+                    <div class="product-content">
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                            <h3 class="product-title">${product.name}</h3>
+                            <span style="background: var(--light); color: var(--primary); padding: 5px 10px; border-radius: 20px; font-size: 0.9rem;">${product.category}</span>
+                        </div>
+                        <p class="product-description">${product.description}</p>
+                        <div class="product-price">${formatPrice(product.price)} ֏</div>
+                        <div class="product-actions">
+                            <button class="add-to-cart-btn" onclick="addToCart(${product.id})" ${inCart ? 'disabled style="opacity: 0.6; cursor: not-allowed;"' : ''}>
+                                <i class="fas fa-cart-plus"></i> ${inCart ? 'Ավելացված է' : 'Ավելացնել զամբյուղ'}
+                            </button>
+                            <button class="buy-now-btn" onclick="buyNow(${product.id})">
+                                <i class="fas fa-bolt"></i> Այժմ գնել
+                            </button>
+                        </div>
+                    </div>
+                `;
+                
+                productsGrid.appendChild(productCard);
+            });
+        }
+
+        // Ավելացնել ապրանքը զամբյուղ
+        function addToCart(productId) {
+            if (!currentUser) {
+                showMessage('loginMessage', 'Խնդրում ենք մուտք գործել զամբյուղ օգտագործելու համար', 'error');
+                switchTab('login');
+                return;
+            }
+            
+            const product = products.find(p => p.id === productId);
+            
+            // Ստուգել, արդյոք ապրանքն արդեն զամբյուղում է
+            const existingItem = cart.find(item => item.id === productId);
+            
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({
+                    id: product.id,
+                    name: product.name,
+                    price: product.price,
+                    image: product.image,
+                    quantity: 1
+                });
+            }
+            
+            saveCartToStorage();
+            updateCartDisplay();
+            loadProducts(); // Կանչել նորից ապրանքները ցուցադրելու համար (փոխել կոճակի տեսքը)
+            
+            // Ցուցադրել հաջողության հաղորդագրություն
+            showNotification(`${product.name} ավելացվել է զամբյուղ`, 'success');
+        }
+
+        // Այժմ գնել ֆունկցիա
+        function buyNow(productId) {
+            addToCart(productId);
+            // Ցուցադրել պատվերի հաստատման մոդալ
+            showOrderModal();
+        }
+
+        // Հեռացնել ապրանքը զամբյուղից
+        function removeFromCart(productId) {
+            cart = cart.filter(item => item.id !== productId);
+            saveCartToStorage();
+            updateCartDisplay();
+            loadProducts(); // Կանչել նորից ապրանքները ցուցադրելու համար
+        }
+
+        // Մաքրել ամբողջ զամբյուղը
+        function clearCart() {
+            if (confirm('Դուք համոզված եք, որ ցանկանում եք մաքրել զամբյուղը?')) {
+                cart = [];
+                saveCartToStorage();
+                updateCartDisplay();
+                loadProducts(); // Կանչել նորից ապրանքները ցուցադրելու համար
+                showNotification('Զամբյուղը մաքրվել է', 'success');
+            }
+        }
+
+        // Թարմացնել զամբյուղի ցուցադրումը
+        function updateCartDisplay() {
+            const cartCount = document.getElementById('cartCount');
+            const cartEmpty = document.getElementById('cartEmpty');
+            const cartItems = document.getElementById('cartItems');
+            const cartTotal = document.getElementById('cartTotal');
+            const cartActions = document.getElementById('cartActions');
+            const totalAmount = document.getElementById('totalAmount');
+            
+            // Թարմացնել զամբյուղում առարկաների քանակը
+            const itemCount = cart.reduce((total, item) => total + item.quantity, 0);
+            cartCount.textContent = itemCount;
+            
+            if (cart.length === 0) {
+                cartEmpty.style.display = 'block';
+                cartItems.style.display = 'none';
+                cartTotal.style.display = 'none';
+                cartActions.style.display = 'none';
+            } else {
+                cartEmpty.style.display = 'none';
+                cartItems.style.display = 'block';
+                cartTotal.style.display = 'flex';
+                cartActions.style.display = 'flex';
+                
+                // Լրացնել զամբյուղի առարկաները
+                cartItems.innerHTML = '';
+                let total = 0;
+                
+                cart.forEach(item => {
+                    const itemTotal = item.price * item.quantity;
+                    total += itemTotal;
+                    
+                    const cartItem = document.createElement('div');
+                    cartItem.className = 'cart-item';
+                    cartItem.innerHTML = `
+                        <div class="cart-item-img" style="background-image: url('${item.image}')"></div>
+                        <div class="cart-item-details">
+                            <div class="cart-item-title">${item.name}</div>
+                            <div class="cart-item-price">${formatPrice(item.price)} ֏ × ${item.quantity}</div>
+                        </div>
+                        <button class="cart-item-remove" onclick="removeFromCart(${item.id})">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    `;
+                    cartItems.appendChild(cartItem);
+                });
+                
+                totalAmount.textContent = formatPrice(total) + ' ֏';
+            }
+        }
+
+        // Պատվերի ընթացակարգ
+        function checkout() {
+            if (cart.length === 0) {
+                showNotification('Զամբյուղը դատարկ է', 'error');
+                return;
+            }
+            
+            showOrderModal();
+        }
+
+        // Ցուցադրել պատվերի մոդալ
+        function showOrderModal() {
+            const orderDetails = document.getElementById('orderDetails');
+            let total = 0;
+            
+            let orderHTML = '<h3>Ձեր պատվերը</h3><ul style="margin: 15px 0; padding-left: 20px;">';
+            
+            cart.forEach(item => {
+                const itemTotal = item.price * item.quantity;
+                total += itemTotal;
+                orderHTML += `<li>${item.name} - ${item.quantity} × ${formatPrice(item.price)} ֏ = ${formatPrice(itemTotal)} ֏</li>`;
+            });
+            
+            orderHTML += `</ul><div style="font-weight: bold; margin-top: 10px;">Ընդամենը: ${formatPrice(total)} ֏</div>`;
+            
+            orderDetails.innerHTML = orderHTML;
+            document.getElementById('orderModal').style.display = 'flex';
+        }
+
+        // Փակել մոդալ
+        function closeModal() {
+            document.getElementById('orderModal').style.display = 'none';
+            document.getElementById('orderAddress').value = '';
+            document.getElementById('orderPhone').value = '';
+        }
+
+        // Հաստատել պատվերը
+        function confirmOrder() {
+            const address = document.getElementById('orderAddress').value.trim();
+            const phone = document.getElementById('orderPhone').value.trim();
+            
+            if (!address || !phone) {
+                alert('Խնդրում ենք լրացնել բոլոր դաշտերը պատվերը հաստատելու համար');
+                return;
+            }
+            
+            // Հաշվարկել ընդհանուր գումարը
+            let total = 0;
+            cart.forEach(item => {
+                total += item.price * item.quantity;
+            });
+            
+            // Պահպանել պատվերը (իրական նախագծում պետք է ուղարկել սերվեր)
+            const order = {
+                id: Date.now(),
+                userId: currentUser.id,
+                userName: currentUser.name,
+                items: [...cart],
+                total: total,
+                address: address,
+                phone: phone,
+                date: new Date().toISOString(),
+                status: 'Սպասում է հաստատման'
+            };
+            
+            // Պահպանել պատվերների պատմությունը
+            let orders = JSON.parse(localStorage.getItem('luxuryCatalogOrders')) || [];
+            orders.push(order);
+            localStorage.setItem('luxuryCatalogOrders', JSON.stringify(orders));
+            
+            // Մաքրել զամբյուղը
+            cart = [];
+            saveCartToStorage();
+            updateCartDisplay();
+            loadProducts();
+            
+            // Փակել մոդալ
+            closeModal();
+            
+            // Ցուցադրել հաջողության հաղորդագրություն
+            showNotification(`Պատվերը հաջողությամբ տեղադրված է։ Պատվերի համար՝ #${order.id}։ Մեր գործադիր manager-ը կկապնվի Ձեզ հետ։`, 'success');
+        }
+
+        // Զամբյուղի ցուցադրման փոփոխում (համար բջջային սարքեր)
+        function toggleCart() {
+            const cartSection = document.getElementById('cartSection');
+            if (window.innerWidth <= 992) {
+                if (cartSection.style.display === 'none' || cartSection.style.display === '') {
+                    cartSection.style.display = 'block';
+                } else {
+                    cartSection.style.display = 'none';
+                }
+            }
+        }
+
+        // Պահպանել զամբյուղը localStorage-ում
+        function saveCartToStorage() {
+            if (currentUser) {
+                localStorage.setItem(`luxuryCatalogCart_${currentUser.id}`, JSON.stringify(cart));
+            }
+        }
+
+        // Բեռնել զամբյուղը localStorage-ից
+        function loadCartFromStorage() {
+            if (currentUser) {
+                cart = JSON.parse(localStorage.getItem(`luxuryCatalogCart_${currentUser.id}`)) || [];
+            } else {
+                cart = [];
+            }
+        }
+
+        // Օժանդակ ֆունկցիաներ
+        function showMessage(elementId, message, type) {
+            const element = document.getElementById(elementId);
+            element.textContent = message;
+            element.className = `message ${type}`;
+            element.style.display = 'block';
+        }
+
+        function showNotification(message, type) {
+            // Ստեղծել նոտիֆիկացիայի տարր
+            const notification = document.createElement('div');
+            notification.className = `message ${type}`;
+            notification.textContent = message;
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                z-index: 1001;
+                max-width: 350px;
+                animation: slideIn 0.3s ease;
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Հեռացնել 3 վայրկյան հետո
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease';
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, 3000);
+            
+            // Ավելացնել անիմացիաների CSS
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes slideIn {
+                    from { transform: translateX(100%); opacity: 0; }
+                    to { transform: translateX(0); opacity: 1; }
+                }
+                @keyframes slideOut {
+                    from { transform: translateX(0); opacity: 1; }
+                    to { transform: translateX(100%); opacity: 0; }
+                }
+            `;
+            document.head.appendChild(style);
+        }
+
+        function validateEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
+        }
+
+        function hashPassword(password) {
+            return btoa(password + 'luxurySalt');
+        }
+
+        function formatPrice(price) {
+            return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+
+        // Սկզբնական կարգավորում
+        window.onload = function() {
+            if (currentUser) {
+                loadCartFromStorage();
+                showCatalog();
+            }
+        };
+    </script>
+</body>
+</html>
